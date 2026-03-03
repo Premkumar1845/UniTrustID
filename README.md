@@ -4,6 +4,7 @@
   <img src="https://img.shields.io/badge/TypeScript-5.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
   <img src="https://img.shields.io/badge/AlgoKit-2.10-black?style=for-the-badge" />
+  <a href="https://uni-trust-id.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-▶_uni--trust--id.vercel.app-00C853?style=for-the-badge&logo=vercel&logoColor=white" /></a>
 </p>
 
 # 🔐 UniTrustID — Decentralized Identity for Campus Ecosystem
