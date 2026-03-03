@@ -1,0 +1,251 @@
+/* ══════════════════════════════════════════════════
+   Services
+   ══════════════════════════════════════════════════ */
+
+.service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    transition: all 0.3s;
+}
+
+.service-card:hover {
+    border-color: rgba(0, 200, 255, 0.15);
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.svc-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.svc-icon.lib {
+    background: rgba(167, 139, 250, 0.1);
+}
+
+.svc-icon.hostel {
+    background: rgba(245, 166, 35, 0.1);
+}
+
+.svc-icon.event {
+    background: rgba(46, 213, 115, 0.1);
+}
+
+.svc-icon.course {
+    background: rgba(249, 115, 22, 0.1);
+}
+
+.svc-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.svc-desc {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.svc-reqs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 10px 0 14px;
+}
+
+.req-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(0, 200, 255, 0.06);
+    border: 1px solid rgba(0, 200, 255, 0.12);
+    color: var(--muted);
+}
+
+.access-btn {
+    width: 100%;
+    padding: 11px;
+    border-radius: 9px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.access-btn.ready {
+    background: rgba(0, 200, 255, 0.1);
+    border: 1px solid rgba(0, 200, 255, 0.25);
+    color: var(--cyan);
+}
+
+.access-btn.ready:hover {
+    background: rgba(0, 200, 255, 0.18);
+}
+
+.access-btn.no-cred {
+    background: rgba(255, 71, 87, 0.05);
+    border: 1px solid rgba(255, 71, 87, 0.1);
+    color: var(--muted);
+    cursor: not-allowed;
+}
+
+.access-granted {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px;
+    background: rgba(46, 213, 115, 0.08);
+    border: 1px solid rgba(46, 213, 115, 0.2);
+    border-radius: 9px;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: 11px;
+}
+
+.privacy-note {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: rgba(0, 200, 255, 0.03);
+    border: 1px solid rgba(0, 200, 255, 0.1);
+    border-radius: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+/* ── Services Responsive ── */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .service-card {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .svc-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+        border-radius: 10px;
+    }
+
+    .svc-name {
+        font-size: 15px;
+    }
+
+    .privacy-note {
+        padding: 14px 16px;
+        border-radius: 12px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .service-card {
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    .service-header {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .svc-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+        border-radius: 8px;
+    }
+
+    .svc-name {
+        font-size: 14px;
+    }
+
+    .svc-desc {
+        font-size: 10px;
+    }
+
+    .svc-reqs {
+        gap: 4px;
+        margin: 8px 0 12px;
+    }
+
+    .req-tag {
+        font-size: 8px;
+        padding: 2px 6px;
+    }
+
+    .access-btn {
+        padding: 10px;
+        font-size: 10px;
+        border-radius: 8px;
+    }
+
+    .access-granted {
+        padding: 10px;
+        font-size: 10px;
+        border-radius: 8px;
+        flex-wrap: wrap;
+    }
+
+    .privacy-note {
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 10px;
+        gap: 8px;
+        font-size: 12px;
+        flex-direction: column;
+    }
+}
+
+/* ── Light Theme ── */
+[data-theme='light'] .service-card {
+    background: #ffffff;
+    border-color: rgba(0, 120, 180, 0.12);
+}
+
+[data-theme='light'] .service-card:hover {
+    border-color: rgba(0, 136, 204, 0.2);
+}
+
+[data-theme='light'] .req-tag {
+    background: rgba(0, 136, 204, 0.05);
+    border-color: rgba(0, 136, 204, 0.12);
+    color: #6b8299;
+}
+
+[data-theme='light'] .access-btn.ready {
+    background: rgba(0, 136, 204, 0.08);
+    border-color: rgba(0, 136, 204, 0.2);
+    color: #0077aa;
+}
+
+[data-theme='light'] .access-granted {
+    background: rgba(29, 185, 84, 0.06);
+    border-color: rgba(29, 185, 84, 0.2);
+    color: #168a40;
+}
+
+[data-theme='light'] .privacy-note {
+    background: rgba(0, 136, 204, 0.03);
+    border-color: rgba(0, 136, 204, 0.1);
+}
