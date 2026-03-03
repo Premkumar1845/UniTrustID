@@ -1,0 +1,368 @@
+/* ══════════════════════════════════════════════════
+   Header & Navigation
+   ══════════════════════════════════════════════════ */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  background: rgba(5, 10, 18, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse-border 3s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+@keyframes pulse-border {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(0, 200, 255, 0.4));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 10px rgba(0, 200, 255, 0.6));
+  }
+}
+
+.logo-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.logo-text span {
+  color: var(--cyan);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.network-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  color: var(--amber);
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--cyan);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--cyan);
+  background: rgba(0, 200, 255, 0.08);
+  transform: scale(1.08);
+}
+
+[data-theme='light'] .theme-toggle:hover {
+  background: rgba(0, 136, 204, 0.1);
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  padding: 6px 18px;
+  border-radius: 8px;
+  border: 1px solid #ff4d6a;
+  background: rgba(255, 77, 106, 0.12);
+  color: #ff4d6a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.logout-btn:hover {
+  background: #ff4d6a;
+  color: #fff;
+  transform: scale(1.04);
+  box-shadow: 0 0 12px rgba(255, 77, 106, 0.35);
+}
+
+[data-theme='light'] .logout-btn {
+  border-color: #d03050;
+  color: #d03050;
+  background: rgba(208, 48, 80, 0.08);
+}
+
+[data-theme='light'] .logout-btn:hover {
+  background: #d03050;
+  color: #fff;
+}
+
+[data-theme='light'] .header {
+  background: rgba(240, 244, 248, 0.92);
+  border-bottom-color: rgba(0, 120, 180, 0.12);
+}
+
+[data-theme='light'] .tabs {
+  background: rgba(240, 244, 248, 0.8);
+  border-bottom-color: rgba(0, 120, 180, 0.1);
+}
+
+[data-theme='light'] .tab {
+  color: #6b8299;
+}
+
+[data-theme='light'] .tab:hover {
+  color: #1a2a3a;
+}
+
+[data-theme='light'] .tab.active {
+  color: #0088cc;
+  border-bottom-color: #0088cc;
+}
+
+[data-theme='light'] .tab-badge {
+  background: #0088cc;
+  color: #fff;
+}
+
+[data-theme='light'] .network-badge {
+  background: rgba(212, 136, 15, 0.1);
+  border-color: rgba(212, 136, 15, 0.3);
+  color: #b37a00;
+}
+
+[data-theme='light'] .logo-mark svg rect:first-of-type {
+  fill: #e8edf2;
+  stroke: #0088cc;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 10, 18, 0.6);
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 15px 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+
+.tab-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  margin-right: 8px;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.tab-badge {
+  margin-left: 6px;
+  background: var(--cyan);
+  color: #000;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+/* ── Header & Tabs Responsive ── */
+
+/* Small Laptop */
+@media (max-width: 1024px) {
+  .header {
+    padding: 16px 24px;
+  }
+
+  .tabs {
+    padding: 0 24px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .header {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-right {
+    gap: 8px;
+    justify-content: flex-end;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .network-badge {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .tabs {
+    padding: 0 16px;
+    gap: 0;
+  }
+
+  .tab {
+    padding: 12px 14px;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .header {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .header-right {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .network-badge {
+    font-size: 8px;
+    padding: 2px 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .theme-toggle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  .tabs {
+    padding: 0 8px;
+    gap: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    padding: 10px 10px;
+    font-size: 9px;
+    letter-spacing: 0.3px;
+  }
+
+  .tab-dot {
+    width: 5px;
+    height: 5px;
+    margin-right: 5px;
+  }
+
+  .tab-badge {
+    font-size: 9px;
+    padding: 1px 5px;
+  }
+}
