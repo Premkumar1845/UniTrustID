@@ -7,7 +7,7 @@
   <a href="https://uni-trust-id.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-▶_uni--trust--id.vercel.app-00C853?style=for-the-badge&logo=vercel&logoColor=white" /></a>
 </p>
 
-# 🔐 UniTrustID — Decentralized Identity for Campus Ecosystem
+# 🔐 UniTrustID - Decentralized Identity for Campus Ecosystem
 
 **UniTrustID** is a decentralized identity (DID) management system built on the **Algorand blockchain**. It enables universities to issue, manage, and verify tamper-proof digital credentials for students — anchored on-chain with real transactions that can be verified on the [Lora Block Explorer](https://lora.algokit.io/testnet).
 
@@ -250,10 +250,10 @@ This follows **privacy-by-design** principles — only the minimum required info
 - [x] Selective disclosure for campus services
 - [x] Lora Explorer transaction links
 - [x] Dark / Light theme toggle
+- [x] Mobile-native app (React Native)
 - [ ] DID resolution service (off-chain resolver)
 - [ ] Credential revocation list
 - [ ] Multi-university federation
-- [ ] Mobile-native app (React Native)
 - [ ] ARC-19 / ARC-69 NFT-based credentials
 
 ---
@@ -262,7 +262,7 @@ This follows **privacy-by-design** principles — only the minimum required info
 
 **Prem Kumar Kuppili**
 - GitHub: [@Premkumar1845](https://github.com/Premkumar1845)
-- Email: premshyam48@gmail.com
+- Email: premkumarkuppili18@gmail.com
 
 ---
 
@@ -272,7 +272,4 @@ This project is built for academic/educational purposes as part of a campus dece
 
 ---
 
-<p align="center">
-  Built with ❤️ on <strong>Algorand</strong>
-</p>
 
