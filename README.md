@@ -9,7 +9,7 @@
 
 # 🔐 UniTrustID - Decentralized Identity for Campus Ecosystem
 
-**UniTrustID** is a decentralized identity (DID) management system built on the **Algorand blockchain**. It enables universities to issue, manage, and verify tamper-proof digital credentials for students — anchored on-chain with real transactions that can be verified on the [Lora Block Explorer](https://lora.algokit.io/testnet).
+**UniTrustID** is a decentralized identity (DID) management system built on the **Algorand blockchain**. It enables universities to issue, manage, and verify tamper-proof digital credentials for students anchored on-chain with real transactions that can be verified on the [Lora Block Explorer](https://lora.algokit.io/testnet).
 
 > Built with [AlgoKit](https://developer.algorand.org/algokit/), Pera Wallet, Defly Wallet, and the W3C DID specification.
 
@@ -177,23 +177,6 @@ User fills profile → Generate did:algo:<address>
                    → Sign via Pera/Defly wallet (mobile approval)
                    → Broadcast to Algorand Testnet
                    → Confirm on-chain → View on Lora Explorer
-```
-
-### On-Chain Transaction Note
-
-Every DID is anchored as a **1-ALGO payment transaction** (self-transfer) with a compact JSON note field:
-
-```json
-{
-  "t": "DID_ANCHOR",
-  "v": 1,
-  "did": "did:algo:PWW7ASSQVVHMMVLB4ZTCT47XAWQWSF6KU74TVEXKC3J37LC2NWNNSPFK3I",
-  "m": {
-    "name": "Prem Kumar Kuppili",
-    "studentId": "23RA1A6675",
-    "department": "Artificial Intelligence & Machine Learning"
-  }
-}
 ```
 
 ### Credential Types
