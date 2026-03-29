@@ -159,6 +159,97 @@ export const AlgoNode = {
         return { txId: confirmedTxId, loraUrl } as any;
     },
 
+    /**
+     * Pay 1 ALGO to admin for credential issuance.
+     * Returns the transaction ID used as a unique hash for the credential / ID card.
+     */
+    async payForCredential(
+        address: string,
+        credentialType: string,
+        addLog: LogFn,
+        signTransactions: TxnSigner
+    ): Promise<{ txId: string }> {
+        console.log('[UniTrustID] payForCredential called for', credentialType);
+
+        const client = createAlgodClient();
+
+        addLog('info', `Initiating 1 ALGO payment for ${credentialType} credential...`);
+
+        // 1. Get suggested params
+        let params: algosdk.SuggestedParams;
+        try {
+            params = await client.getTransactionParams().do();
+            addLog('data', `Network: ${params.genesisID} | Round: ${params.firstValid}`);
+        } catch (e: any) {
+            addLog('warn', `Failed to get tx params: ${e.message}`);
+            throw new Error('Could not connect to Algorand Testnet.');
+        }
+
+        // 2. Build note payload
+        const notePayload = {
+            t: 'CRED_ISSUE',
+            v: 1,
+            cred: credentialType,
+            addr: address,
+            ts: Date.now(),
+        };
+        const noteBytes = new TextEncoder().encode(JSON.stringify(notePayload));
+        addLog('data', `Credential note: ${noteBytes.length} bytes`);
+
+        // 3. Build 1-ALGO payment
+        addLog('info', `Building 1-ALGO payment for ${credentialType}...`);
+        const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            sender: address,
+            receiver: ADMIN_ADDRESS,
+            amount: 1_000_000, // 1 ALGO
+            suggestedParams: params,
+            note: noteBytes,
+        });
+
+        addLog('data', `TxID: ${txn.txID()}`);
+        addLog('info', '📱 Please approve the transaction in your wallet app...');
+
+        // 4. Sign
+        let signedTxnBytes: Uint8Array[];
+        try {
+            signedTxnBytes = await signTransactions([txn], [0]);
+            addLog('success', '✓ Transaction signed by wallet');
+        } catch (e: any) {
+            const msg = String(e.message || e);
+            if (/cancel|reject|abort|user/i.test(msg)) {
+                addLog('warn', 'Transaction rejected by user');
+                throw new Error('Transaction was rejected. Please try again.');
+            }
+            addLog('warn', `Signing failed: ${msg}`);
+            throw new Error(`Wallet signing failed: ${msg}`);
+        }
+
+        // 5. Submit
+        addLog('info', 'Broadcasting credential payment...');
+        let confirmedTxId: string;
+        try {
+            const sendResult = await client.sendRawTransaction(signedTxnBytes[0]).do();
+            confirmedTxId = sendResult.txid ?? txn.txID();
+            addLog('data', `Submitted TxID: ${confirmedTxId}`);
+        } catch (e: any) {
+            addLog('warn', `Broadcast failed: ${e.message}`);
+            throw new Error(`Transaction broadcast failed: ${e.message}`);
+        }
+
+        // 6. Wait for confirmation
+        addLog('info', 'Waiting for confirmation...');
+        try {
+            const confirmed = await algosdk.waitForConfirmation(client, confirmedTxId, 4);
+            addLog('success', `✓ Confirmed in round ${confirmed.confirmedRound}`);
+        } catch (e: any) {
+            addLog('warn', `Confirmation timed out: ${e.message}`);
+        }
+
+        addLog('success', `✓ Credential payment confirmed! TxID: ${confirmedTxId}`);
+
+        return { txId: confirmedTxId };
+    },
+
     /** Get Lora explorer URL for a transaction */
     loraTransactionUrl(txId: string): string {
         return `${LORA_BASE}/transaction/${txId}`;

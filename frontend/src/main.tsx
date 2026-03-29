@@ -11,7 +11,7 @@ import { walletManager } from './lib/walletProvider';
 import './styles/globals.css';
 import './styles/header.css';
 import './styles/wallet.css';
-import './styles/credentials.css';
+import './styles/idcard.css';import './styles/credentials.css';
 import './styles/profile.css';
 import './styles/services.css';
 import './styles/modal.css';

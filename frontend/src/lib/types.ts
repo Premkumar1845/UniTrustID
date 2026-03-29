@@ -65,6 +65,8 @@ export interface Credential {
     _claims: CredentialClaims;
     _issuedAt: number;
     _expiresAt: number;
+    _txId?: string;      // Algorand transaction ID for credential payment
+    _txHash?: string;    // Unique hash derived from txId for ID card
 }
 
 export interface Disclosure {

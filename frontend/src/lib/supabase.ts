@@ -200,3 +200,73 @@ export const AuthService = {
       .eq('id', userId);
   },
 };
+
+/* ── 24-Hour Session Persistence ── */
+
+const SESSION_KEY = 'unitrustid-session';
+const SESSION_EXPIRY_KEY = 'unitrustid-session-expiry';
+const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+export interface SessionData {
+  user: AuthUser;
+  profile: any; // DIDProfile
+  credentials: any[]; // Credential[]
+}
+
+export const SessionManager = {
+  /** Save authenticated user session with state to localStorage (valid for 24 hours) */
+  save(data: SessionData): void {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+    localStorage.setItem(SESSION_EXPIRY_KEY, String(Date.now() + SESSION_DURATION_MS));
+  },
+
+  /** Update cached profile and credentials */
+  updateState(profile: any, credentials: any[]): void {
+    try {
+      const raw = localStorage.getItem(SESSION_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as SessionData;
+        parsed.profile = profile;
+        parsed.credentials = credentials;
+        localStorage.setItem(SESSION_KEY, JSON.stringify(parsed));
+      }
+    } catch {}
+  },
+
+  /** Restore a valid (non-expired) session. Returns null if expired/missing. */
+  restore(): SessionData | null {
+    try {
+      const raw = localStorage.getItem(SESSION_KEY);
+      const expiry = localStorage.getItem(SESSION_EXPIRY_KEY);
+      if (!raw || !expiry) return null;
+      if (Date.now() > Number(expiry)) {
+        // Session expired — clean up
+        this.clear();
+        return null;
+      }
+      return JSON.parse(raw) as SessionData;
+    } catch {
+      this.clear();
+      return null;
+    }
+  },
+
+  /** Check if the current session is still valid */
+  isValid(): boolean {
+    const expiry = localStorage.getItem(SESSION_EXPIRY_KEY);
+    return !!expiry && Date.now() < Number(expiry);
+  },
+
+  /** Get time remaining in ms */
+  timeRemaining(): number {
+    const expiry = localStorage.getItem(SESSION_EXPIRY_KEY);
+    if (!expiry) return 0;
+    return Math.max(0, Number(expiry) - Date.now());
+  },
+
+  /** Clear session (logout or expiry) */
+  clear(): void {
+    localStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_EXPIRY_KEY);
+  },
+};

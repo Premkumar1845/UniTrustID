@@ -1,0 +1,33 @@
+.id-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(0, 200, 255, 0.15), rgba(0, 255, 231, 0.1));
+    border: 1px solid rgba(0, 200, 255, 0.3);
+    color: var(--cyan);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 12px;
+}
+
+.id-card-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 200, 255, 0.25), rgba(0, 255, 231, 0.2));
+    box-shadow: 0 0 16px rgba(0, 200, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+[data-theme='light'] .id-card-btn {
+    background: linear-gradient(135deg, rgba(0, 136, 204, 0.1), rgba(0, 170, 153, 0.1));
+    border-color: rgba(0, 136, 204, 0.25);
+    color: #0077aa;
+}
+
+[data-theme='light'] .id-card-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 136, 204, 0.15), rgba(0, 170, 153, 0.15));
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.15);
+}

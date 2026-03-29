@@ -16,8 +16,8 @@ import { AlgoNode } from './lib/algoNode';
 import { DIDModule } from './lib/did';
 import { CredModule, CRED_META } from './lib/credentials';
 import { delay, shortAddr } from './lib/utils';
-import { AuthService, type AuthUser } from './lib/supabase';
-
+import { AuthService, type AuthUser, SessionManager } from './lib/supabase';
+import { downloadIDCardPDF } from './lib/idcard';
 import { Toast } from './components/Toast';
 import { WalletChip } from './components/WalletChip';
 import { WalletScreen } from './components/WalletScreen';
@@ -27,8 +27,6 @@ import { CredentialsTab } from './components/CredentialsTab';
 import { ServicesTab } from './components/ServicesTab';
 import { ProfileTab } from './components/ProfileTab';
 import { SelDiscModal } from './components/SelDiscModal';
-import { Console } from './components/Console';
-
 type AppStep = 'wallet' | 'auth' | 'create-did' | 'app';
 
 const TABS = [
@@ -80,11 +78,23 @@ export default function App() {
 
   const handleConnected = (w: WalletInfo) => {
     setWallet(w);
-    // After wallet connection, go to auth screen for login/signup
-    setStep('auth');
+    const session = SessionManager.restore();
+    if (session) {
+      setAuthUser(session.user);
+      if (session.profile) {
+        setProfile(session.profile);
+        setCredentials(session.credentials || []);
+        setStep('app');
+      } else {
+        handleAuthenticated(session.user);
+      }
+    } else {
+      setStep('auth');
+    }
   };
 
   const handleAuthenticated = (user: AuthUser) => {
+    SessionManager.save({ user, profile: null, credentials: [] });
     setAuthUser(user);
     // Pre-fill form from user's Supabase profile
     setForm({
@@ -112,6 +122,7 @@ export default function App() {
     if (authUser) {
       await AuthService.logout(authUser.id).catch(() => { });
     }
+    SessionManager.clear();
     setProfile(null);
     setCredentials([]);
     setLogs([]);
@@ -130,6 +141,7 @@ export default function App() {
         await activeWallet.disconnect();
       } catch (_e) { /* ignore */ }
     }
+    SessionManager.clear();
     setWallet(null);
     setProfile(null);
     setCredentials([]);
@@ -202,8 +214,10 @@ export default function App() {
       addLog('data', `🔍 View on Lora: ${loraUrl}`);
     }
 
+    const newCreds = [cred];
+    SessionManager.updateState(p, newCreds);
     setProfile(p);
-    setCredentials([cred]);
+    setCredentials(newCreds);
     setCreatingDID(false);
     setStep('app');
     showToast(
@@ -213,14 +227,41 @@ export default function App() {
     );
   };
 
-  const handleIssueCred = (type: CredentialType) => {
-    if (!profile) return;
+  const handleIssueCred = async (type: CredentialType) => {
+    if (!profile || !wallet) return;
+
+    let txId = 'DEMO_' + Date.now();
+    try {
+      if (wallet.isReal) {
+        const res = await AlgoNode.payForCredential(
+          wallet.address,
+          type,
+          addLog,
+          transactionSigner
+        );
+        txId = res.txId;
+      } else {
+        await delay(800);
+        addLog('success', `✓ Simulated payment for ${type}`);
+      }
+    } catch (e: any) {
+      showToast(e.message || 'Payment failed', true);
+      return;
+    }
+
     const c = CredModule.issue(
       type,
       profile.did,
       `Campus ${CRED_META[type].label} Office`
     );
-    setCredentials((prev) => [...prev, c]);
+    c._txId = txId;
+    c._txHash = txId.slice(0, 16).toUpperCase();
+
+    setCredentials((prev) => {
+      const newCreds = [...prev, c];
+      SessionManager.updateState(profile, newCreds);
+      return newCreds;
+    });
     addLog('success', `✓ ${CRED_META[type].label} credential issued`);
     showToast(`${CRED_META[type].label} credential issued`);
   };
@@ -279,6 +320,29 @@ export default function App() {
             </button>
             {wallet && (
               <WalletChip wallet={wallet} onDisconnect={handleDisconnect} />
+            )}
+            {step === 'app' && (
+              <button
+                className="id-card-btn"
+                onClick={() => {
+                  if (authUser && profile && wallet) {
+                    const remainingMs = SessionManager.timeRemaining();
+                    const loginTimeMs = Date.now() + remainingMs - (24 * 60 * 60 * 1000);
+                    const loginTimeStr = new Date(loginTimeMs).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                    downloadIDCardPDF({
+                      user: authUser,
+                      profile,
+                      credentials,
+                      walletAddress: wallet.address,
+                      loginTime: loginTimeStr,
+                    });
+                  }
+                }}
+                title="Download verified ID card"
+              >
+                🪪 ID CARD
+              </button>
             )}
             {step === 'app' && (
               <button

@@ -6,7 +6,6 @@ import type { Credential, DIDProfile, LogLine, WalletInfo } from '../lib/types';
 import { AlgoNode } from '../lib/algoNode';
 import { CRED_META } from '../lib/credentials';
 import { fmtDate, fmtTime, shortAddr } from '../lib/utils';
-import { Console } from './Console';
 
 interface OverviewTabProps {
   profile: DIDProfile;
@@ -140,10 +139,6 @@ export function OverviewTab({
             >
               View all credentials →
             </button>
-          </div>
-          <div className="card">
-            <div className="card-label">Blockchain Console</div>
-            <Console lines={logs} />
           </div>
         </div>
       </div>

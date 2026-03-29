@@ -78,15 +78,15 @@ export function CredentialsTab({
                         <div
                             style={{
                                 fontSize: 11,
-                                color: 'var(--muted)',
+                                color: 'var(--amber)',
                                 marginBottom: 14,
                                 padding: '8px 12px',
-                                background: 'rgba(0,0,0,.2)',
+                                background: 'rgba(245,166,35,.1)',
                                 borderRadius: 8,
+                                border: '1px solid rgba(245,166,35,.2)'
                             }}
                         >
-                            <span style={{ color: 'var(--cyan)' }}>Issuer:</span> Campus{' '}
-                            {CRED_META[selType].label} Office
+                            <span>⚠️</span> <span style={{ color: 'var(--amber)' }}>Cost:</span> 1 ALGO per credential
                         </div>
 
                         <button
@@ -99,10 +99,10 @@ export function CredentialsTab({
                             }
                         >
                             {issuing
-                                ? '⏳ ISSUING...'
+                                ? '⏳ PAYING & ISSUING...'
                                 : credentials.some((c) => c.credentialType === selType)
                                     ? '✓ ALREADY ISSUED'
-                                    : 'ISSUE CREDENTIAL'}
+                                    : 'PAY 1 ALGO & ISSUE'}
                         </button>
                     </div>
 
