@@ -19,7 +19,7 @@
 
 | Feature | Description |
 |---|---|
-| **🪪 DID Creation** | Generate W3C-compliant `did:algo:` identifiers anchored on Algorand Testnet via a real 1-ALGO self-transfer transaction |
+| **🪪 DID Creation** | Generate W3C-compliant `did:algo:` identifiers anchored on Algorand Testnet via a real 1-ALGO transaction |
 | **📱 Wallet Integration** | Connect using **Pera Wallet** or **Defly Wallet** via QR code scanning (mobile) |
 | **🎓 Verifiable Credentials** | Issue credentials — StudentID, Library Access, Hostel Resident, Event Attendee, Course Enrollment |
 | **🔏 Selective Disclosure** | Share only specific claims from a credential (e.g., share department without revealing CGPA) |
