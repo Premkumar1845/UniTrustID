@@ -1,3 +1,7 @@
+# 🔐 UniTrustID - Decentralized Identity for Campus Ecosystem
+
+**UniTrustID** is a decentralized identity (DID) management system built on the **Algorand blockchain**. It enables universities to issue, manage, and verify tamper-proof digital credentials for students anchored on-chain with real transactions that can be verified on the [Lora Block Explorer](https://lora.algokit.io/testnet).
+
 <p align="center">
   <img src="https://img.shields.io/badge/Algorand-Testnet-00C8FF?style=for-the-badge&logo=algorand&logoColor=white" />
   <img src="https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
@@ -6,10 +10,6 @@
   <img src="https://img.shields.io/badge/AlgoKit-2.10-black?style=for-the-badge" />
   <a href="https://uni-trust-id.vercel.app"><img src="https://img.shields.io/badge/Live_Demo-▶_uni--trust--id.vercel.app-00C853?style=for-the-badge&logo=vercel&logoColor=white" /></a>
 </p>
-
-# 🔐 UniTrustID - Decentralized Identity for Campus Ecosystem
-
-**UniTrustID** is a decentralized identity (DID) management system built on the **Algorand blockchain**. It enables universities to issue, manage, and verify tamper-proof digital credentials for students anchored on-chain with real transactions that can be verified on the [Lora Block Explorer](https://lora.algokit.io/testnet).
 
 > Built with [AlgoKit](https://developer.algorand.org/algokit/), Pera Wallet, Defly Wallet, and the W3C DID specification.
 
